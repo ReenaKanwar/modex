@@ -1,5 +1,5 @@
 // import React from 'react'
-import { useShows } from '../contexts/ShowContext'
+import { useShows } from '../Contexts/ShowContext'
 import ShowCard from '../Components/ShowCard'
 
 export default function Home(){

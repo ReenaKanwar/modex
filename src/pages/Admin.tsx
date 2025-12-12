@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { useShows } from '../contexts/ShowContext'
-import { useAuth } from '../contexts/AuthContext'
+import { useShows } from '../Contexts/ShowContext'
+import { useAuth } from '../Contexts/AuthContext'
 
 export default function Admin(){
   const { user } = useAuth()
