@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { ShowType } from '../types'
+import  type  { ShowType } from '../types'
 import * as api from '../api'
 
 type ShowCtx = { shows: ShowType[]; loading: boolean; error?: string; refresh: () => Promise<void>; addShow: (s: Partial<ShowType>) => Promise<void> }

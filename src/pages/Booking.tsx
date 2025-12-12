@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import * as api from '../api'
-import SeatGrid from '../components/SeatGrid'
+import SeatGrid from '../Components/SeatGrid'
 
 export default function Booking(){
   const { id } = useParams()

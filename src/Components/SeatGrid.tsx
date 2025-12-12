@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import  { useEffect, useRef, useState } from 'react'
 
 export default function SeatGrid({ totalSeats=40, takenSeats = [], onChange }:{ totalSeats?: number; takenSeats?: number[]; onChange?: (sel:number[])=>void }){
   // We'll use direct DOM updates for visual selection as requested

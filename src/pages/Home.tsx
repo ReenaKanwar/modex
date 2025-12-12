@@ -1,6 +1,6 @@
-import React from 'react'
+// import React from 'react'
 import { useShows } from '../contexts/ShowContext'
-import ShowCard from '../components/ShowCard'
+import ShowCard from '../Components/ShowCard'
 
 export default function Home(){
   const { shows, loading, error, refresh } = useShows()
