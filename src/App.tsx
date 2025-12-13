@@ -1,19 +1,28 @@
-// import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Header from './Components/Header'
-import Home from './pages/Home'
-import Admin from './pages/Admin'
-import Booking from './pages/Booking'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Booking from "./pages/Booking";
+import Admin from "./pages/Admin";
+import Header from "./Components/Header";
+import { ShowProvider } from "./Contexts/ShowContext";
+import { AuthProvider } from "./Contexts/AuthContext";
+import "./App.css";
 
-export default function App(){
+export default function App() {
   return (
-    <div>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/booking/:id" element={<Booking />} />
-      </Routes>
-    </div>
-  )
+    <AuthProvider>
+      <ShowProvider>
+        <BrowserRouter>
+          
+          <Header />
+
+          
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/booking/:id" element={<Booking />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </BrowserRouter>
+      </ShowProvider>
+    </AuthProvider>
+  );
 }

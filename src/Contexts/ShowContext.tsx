@@ -1,39 +1,66 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import  type  { ShowType } from '../types'
-import * as api from '../api'
+import { createContext, useContext, useEffect, useState } from "react";
+import { fetchShows } from "../api";
 
-type ShowCtx = { shows: ShowType[]; loading: boolean; error?: string; refresh: () => Promise<void>; addShow: (s: Partial<ShowType>) => Promise<void> }
-const ShowContext = createContext<ShowCtx | undefined>(undefined)
+const ShowContext = createContext<any>(null);
 
-export const ShowProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [shows, setShows] = useState<ShowType[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string|undefined>(undefined)
+export const ShowProvider = ({ children }: { children: React.ReactNode }) => {
+  const [shows, setShows] = useState<any[]>([]);
+  const [filteredShows, setFilteredShows] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true); // ✅ start with true
 
-  async function refresh() {
-    setLoading(true); setError(undefined)
+  useEffect(() => {
+    loadShows();
+  }, []);
+
+  const loadShows = async () => {
     try {
-      const data = await api.fetchShows()
-      setShows(data)
-    } catch (e: any) { setError(e.message || 'Unknown'); }
-    setLoading(false)
-  }
+      setLoading(true);
+      const data = await fetchShows();
+      setShows(data);
+      setFilteredShows(data);
+    } catch (error) {
+      console.error("Failed to load shows", error);
+      setShows([]);
+      setFilteredShows([]);
+    } finally {
+      setLoading(false); // ✅ always false
+    }
+  };
 
-  useEffect(() => { refresh() }, [])
+  // 🔍 redBus-style filter (date optional)
+  const filterShows = (from: string, to: string, date?: string) => {
+     console.log("Filtering with:", from, to, date);
+    const result = shows.filter((s) => {
+      const matchFrom = s.from
+        ?.toLowerCase()
+        .includes(from.toLowerCase());
 
-  async function addShow(s: Partial<ShowType>) {
-    try {
-      const created = await api.createShow(s)
-      // push locally to avoid re-fetch all
-      setShows(prev => [created, ...prev])
-    } catch (e: any) { throw e }
-  }
+      const matchTo = s.to
+        ?.toLowerCase()
+        .includes(to.toLowerCase());
+
+      // date filter OPTIONAL (bug fix)
+      const matchDate = date
+        ? s.startTime?.includes(date)
+        : true;
+
+      return matchFrom && matchTo && matchDate;
+    });
+
+    setFilteredShows(result);
+  };
 
   return (
-    <ShowContext.Provider value={{ shows, loading, error, refresh, addShow }}>
+    <ShowContext.Provider
+      value={{
+        shows: filteredShows,
+        loading,
+        filterShows,
+      }}
+    >
       {children}
     </ShowContext.Provider>
-  )
-}
+  );
+};
 
-export function useShows() { const c = useContext(ShowContext); if (!c) throw new Error('useShows must be used inside ShowProvider'); return c }
+export const useShows = () => useContext(ShowContext);

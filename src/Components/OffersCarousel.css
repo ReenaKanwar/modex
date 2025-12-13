@@ -1,0 +1,92 @@
+.offers-wrapper {
+  padding: 30px;
+  background: #fff;
+}
+
+.offers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-more {
+  color: #4a5cff;
+  cursor: pointer;
+}
+
+.offers-tabs {
+  margin: 15px 0;
+}
+
+.offers-tabs button {
+  margin-right: 10px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.offers-tabs .active {
+  background: #ffe1dc;
+  border-color: #ffe1dc;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+.carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.offer-card {
+  min-width: 280px;
+  background: linear-gradient(135deg, #fde3d9, #f8e8f0);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.badge {
+  background: #444;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.coupon {
+  margin-top: 12px;
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px dashed #000;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.arrow {
+  position: absolute;
+  top: 40%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.arrow.left {
+  left: -18px;
+}
+
+.arrow.right {
+  right: -18px;
+}

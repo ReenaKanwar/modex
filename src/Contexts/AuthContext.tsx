@@ -1,15 +1,13 @@
-import React, { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from "react";
 
-type AuthCtx = { user: { role: 'admin' | 'user' } | null; setRole: (r: 'admin' | 'user') => void }
-const AuthContext = createContext<AuthCtx | undefined>(undefined)
+const AuthContext = createContext({ isAdmin: false });
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [userRole, setUserRole] = useState<'admin' | 'user'>('user')
+export const AuthProvider = ({ children }: any) => {
   return (
-    <AuthContext.Provider value={{ user: { role: userRole }, setRole: setUserRole }}>
+    <AuthContext.Provider value={{ isAdmin: true }}>
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
-export function useAuth() { const ctx = useContext(AuthContext); if (!ctx) throw new Error('useAuth must be used within AuthProvider'); return ctx }
+export const useAuth = () => useContext(AuthContext);

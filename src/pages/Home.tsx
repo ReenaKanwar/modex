@@ -1,21 +1,25 @@
-// import React from 'react'
-import { useShows } from '../Contexts/ShowContext'
-import ShowCard from '../Components/ShowCard'
+import ShowCard from "../Components/ShowCard";
+import { useShows } from "../Contexts/ShowContext";
+import HeroSearch from "../Components/HeroSearch";
+import OffersCarousel from "../Components/OffersCarousel";
 
-export default function Home(){
-  const { shows, loading, error, refresh } = useShows()
+export default function Home() {
+  const { shows, loading } = useShows();
+
+  if (loading) return <p style={{ textAlign: "center" }}>Loading...</p>;
 
   return (
-    <div className="container">
-      <h1>Available Shows / Trips</h1>
-      <div style={{marginBottom:12}}>
-        <button className="btn btn-ghost small" onClick={refresh}>Refresh</button>
+    <>
+      {/* HERO SECTION */}
+      <HeroSearch />
+      <OffersCarousel />
+
+      {/* SHOW LIST */}
+      <div className="shows">
+        {shows.map((s: any) => (
+          <ShowCard key={s.id} show={s} />
+        ))}
       </div>
-      {loading && <div className="card loading">Loading shows...</div>}
-      {error && <div className="card error">{error}</div>}
-      <div className="grid grid-3">
-        {shows.length === 0 && !loading ? <div className="card">No shows found</div> : shows.map(s => <ShowCard key={s.id} s={s} />)}
-      </div>
-    </div>
-  )
+    </>
+  );
 }
